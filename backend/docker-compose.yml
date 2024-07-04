@@ -1,0 +1,154 @@
+version: "3.9"
+
+# PORT ALLOCATION (Ranges)
+# API-GATEWAY should be on port 4000
+# LOAD BALANCERS should be on ports 4001 - 4099
+# SERVICES should be on ports 4100 - 4999
+# DATABASES should be on ports 5000 - 5999
+
+services:
+  xplora-api-gateway:
+    container_name: "xplora-api-gateway"
+    hostname: "xplora-api-gateway"
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - xplora-users-service-lb
+    environment:
+      - APPID=4000
+    ports:
+      - 4000:4000
+    networks:
+      - xplora-network
+    volumes:
+      - ./api-gateway:/opt/app
+
+  # USERS & SYSTEM INFORMATION 
+  # creates the users load-balancer service
+  xplora-users-service-lb:
+    container_name: "xplora-users-service-lb"
+    image: haproxy
+    depends_on:
+      - "xplora-users-service-instance1"
+      - "xplora-users-service-instance2"
+    # ports:
+    #   - "4001:8080"
+    networks:
+      - xplora-network
+    volumes:
+      - ./haproxy/users:/usr/local/etc/haproxy
+ 
+  # creates its first users instance
+  xplora-users-service-instance1:
+    container_name: "xplora-users-service-instance1"
+    hostname: "xplora-users-service-instance1"
+    build:
+      context: ./users-service
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - xplora-users-db
+    environment:
+      - APPID=4100
+      - DB_URI=mongodb://xplora-users-db:27017/db
+    # ports:
+    #   - 4100:4100
+    networks:
+      - xplora-network
+    volumes:
+      - ./users-service:/opt/app
+
+  # creates the second users instance
+  xplora-users-service-instance2:
+    container_name: "xplora-users-service-instance2"
+    hostname: "xplora-users-service-instance2"
+    build:
+      context: ./users-service
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - xplora-users-db
+    environment:
+      - APPID=4101
+      - DB_URI=mongodb://xplora-users-db:27017/db
+    # ports:
+    #   - 4101:4101
+    networks:
+      - xplora-network
+    volumes:
+      - ./users-service:/opt/app
+
+  # HOTELS
+  # creates its first hotels instance
+  xplora-hotels-service-instance1:
+    container_name: "xplora-hotels-service-instance1"
+    hostname: "xplora-hotels-service-instance1"
+    build:
+      context: ./hotels-service
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - xplora-generic-db
+    environment:
+      - APPID=4102
+      - DB_URI=mongodb://xplora-generic-db:27017/db
+    ports:
+      - 4102:4102
+    networks:
+      - xplora-network
+    volumes:
+      - ./hotels-service:/opt/app
+
+  # BOOKINGS
+  # creates its first bookings instance
+  # xplora-bookings-service-instance1:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - xplora-generic-db
+  #   environment:
+  #     - APPID=4103
+  #     - DB_URI=mongodb://xplora-generic-db:27017/db
+  #   ports:
+  #     - 4103:4103
+  #   networks:
+  #     - xplora-network
+  #   volumes:
+  #     - ./bookings-service:/opt/app
+
+  # DATABASES
+  xplora-users-db:
+    container_name: "xplora-users-db"
+    hostname: "xplora-users-db"
+    platform: linux/amd64
+    image: mongo:latest
+    ports:
+      - 0.0.0.0:5001:27017
+    networks:
+      - xplora-network
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+
+  # Note: I could've created a database per domain, but decided to keep everything
+  # under one database for the purposes of this technical task (except for the users accounts & system details)
+  xplora-generic-db:
+    container_name: "xplora-generic-db"
+    hostname: "xplora-generic-db"
+    platform: linux/amd64
+    image: mongo:latest
+    ports:
+      - 0.0.0.0:5002:27017
+    networks:
+      - xplora-network
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+
+networks:
+  xplora-network:
+    driver: bridge
