@@ -13,6 +13,29 @@ const schema = mongoose.Schema({
     type: String,
     required: true
   },
+  rating: {
+    type: Number,
+    required: true,
+    default: 0,
+    min: 0,
+    max: 5
+  },
+  serviceTimes: {
+    checkIn: {
+      type: String,
+      required: true,
+      trim: true,
+      minlength: 8,
+      maxlength: 8
+    },
+    checkOut: {
+      type: String,
+      required: true,
+      trim: true,
+      minlength: 8,
+      maxlength: 8
+    }
+  },
   layout: {
     totalFloors: {
       type: Number,
@@ -30,6 +53,11 @@ const schema = mongoose.Schema({
       },
       number: {
         type: String,
+        required: true
+      },
+      roomType: {
+        type:  mongoose.Schema.Types.ObjectId,
+        ref: "RoomType",
         required: true
       },
       features: [{
