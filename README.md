@@ -45,6 +45,8 @@ That's it! You just need to access the backend folder and run `docker-compose up
 
 You should be able to access the API Gateway on `http://localhost:4000/graphql`, which is the port expressed in the Dockerfile for this application.
 
+![image](https://github.com/giliard1984/xplora/assets/22618819/183e28b5-269d-49b8-9ecf-6cf45f58e562)
+
 
 ## Setting Up & starting the frontend application
 
@@ -53,6 +55,10 @@ Run `yarn install`
 Run `yarn run dev`
 
 You should be able to access the application on `http://localhost:5173`, which is the port Vite starts the application (by default).
+
+![image](https://github.com/giliard1984/xplora/assets/22618819/aace907a-f844-4593-9411-ab6d6c99eb04)
+
+![image](https://github.com/giliard1984/xplora/assets/22618819/c774420c-d3d7-4f8b-8d0a-d476b33b6e82)
 
 
 ## Next steps
