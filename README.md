@@ -35,7 +35,8 @@ Bear in mind, that I drew what I had in mind, and highlighted only the microserv
 
 ## Modelling
 
-![image](https://github.com/giliard1984/xplora/assets/22618819/059cd224-5c41-44a7-baab-548771254afb)
+![image](https://github.com/giliard1984/xplora/assets/22618819/2c61091c-7f7e-4aa4-9652-1be8f79b3118)
+
 
 ## Setting Up & starting the backend application
 
@@ -72,5 +73,6 @@ This section aims to express the points that are either missing, or should be im
 • Make use of alias within the microservices. There is an issue using some of the libraries with typscript within docker, that I didn't have time to resolve.
 • Move types and interfaces into a .d.ts file or files
 • Abstract all styling into its own .scss files
+• Implement filters
 
 
