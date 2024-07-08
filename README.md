@@ -33,7 +33,7 @@ Bear in mind, that I drew what I had in mind, and highlighted only the microserv
 ![image](https://github.com/giliard1984/xplora/assets/22618819/d251b378-feef-44b3-a01a-8fd65d321d71)
 
 
-## Modeling
+## Modelling
 
 ![image](https://github.com/giliard1984/xplora/assets/22618819/059cd224-5c41-44a7-baab-548771254afb)
 
