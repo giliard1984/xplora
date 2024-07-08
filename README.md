@@ -61,18 +61,20 @@ You should be able to access the application on `http://localhost:5173`, which i
 
 ![image](https://github.com/giliard1984/xplora/assets/22618819/aace907a-f844-4593-9411-ab6d6c99eb04)
 
-![image](https://github.com/giliard1984/xplora/assets/22618819/c774420c-d3d7-4f8b-8d0a-d476b33b6e82)
+![image](https://github.com/giliard1984/xplora/assets/22618819/f03eec6e-5fce-46b4-a4b2-6fbf4ec4938c)
+
 
 
 ## Next steps
 
 This section aims to express the points that are either missing, or should be implemented, for this project to function better.
 
+• Valid bookings, based on the periods
+• Implement filters
 • There is a known issue within the users microservice, that is causing the seeds to be saved twice
 • Improve the existing components
 • Make use of alias within the microservices. There is an issue using some of the libraries with typscript within docker, that I didn't have time to resolve.
 • Move types and interfaces into a .d.ts file or files
 • Abstract all styling into its own .scss files
-• Implement filters
 
 
