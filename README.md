@@ -71,7 +71,9 @@ You should be able to access the application on `http://localhost:5173`, which i
 * If I am selecting Arriving tomorrow and leaving the hotel in 2 days, this means that the availability should be based on Tomorrow/+1 day+. In this case the last day is tricky, because if a new client is entering, it means the room will be available. Also, if that day is a brigde (in between periods), it means it is allocated
 * Bear in mind, that hotels will set different check in and check out times
 
-* Note: I'll bring an excel example here soon!
+* Generates the list of rooms the hotel has to offer, based on the layout. Fetches all bookings for those rooms, and generates the matrix of availability (based on the selected periods - filtered).
+![image](https://github.com/giliard1984/xplora/assets/22618819/5afb07b7-7e6b-44c1-b8b8-57a37a9932e0)
+
 
 
 ## Next steps
