@@ -45,7 +45,7 @@ That's it! You just need to access the backend folder and run `docker-compose up
 
 Note: When starting the microservices, the inital data will be automatically added to the MongoDB collections, so you can start using the application straight away.
 
-You should be able to access the API Gateway on `http://localhost:4000/graphql`, which is the port expressed in the Dockerfile for this application.
+You should be able to access the API Gateway on `http://localhost:4000/graphql`, which is the port expressed in the `docker-compose.yml` for this application.
 
 ![image](https://github.com/giliard1984/xplora/assets/22618819/183e28b5-269d-49b8-9ecf-6cf45f58e562)
 
