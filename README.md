@@ -2,11 +2,13 @@
 
 Please write a simple web app and API to show your skills relevant to our job advert.
 Some of the features & expectations:
+
 * Database design and data modelling about availability of hotel rooms and bookings
 * Feature to find available rooms by date range at least
 * Feature to create a booking with basic details of customer for a hotel room
 
 Bonus: automated testing
+
 The idea of this task is to show off your skills related to our job spec. We know this leaves a
 lot to your interpretation; we would like to see your approach.
 
