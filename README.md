@@ -80,18 +80,18 @@ You should be able to access the application on `http://localhost:5173`, which i
 
 This section aims to express the points that are either missing, or should be implemented, for this project to function better.
 
-* Valid bookings, based on the periods
-* Implement filters
-* Abstract some component code even further, to increase reusability
-* Implement unit testing
-* Move some parameters into .env. e.g. GraphQL Api Gateway within the frontend project
-* Move images to the CDN
-* Create some ENUMS and move some data
-* There is a known issue within the users microservice, that is causing the seeds to be saved twice
-* Improve the existing components
-* Make use of alias within the microservices. There is an issue using some of the libraries with typscript within docker, that I didn't have time to resolve.
-* Move types and interfaces into a .d.ts file or files
-* Abstract all styling into its own .scss files
-* Valid all main actions/data
+* [ ] Valid bookings, based on the periods
+* [ ] Implement filters
+* [ ] Abstract some component code even further, to increase reusability
+* [ ] Implement unit testing
+* [ ] Move some parameters into .env. e.g. GraphQL Api Gateway within the frontend project
+* [ ] Move images to the CDN
+* [ ] Create some ENUMS and move some data
+* [ ] here is a known issue within the users microservice, that is causing the seeds to be saved twice
+* [ ] Improve the existing components
+* [ ] Make use of alias within the microservices. There is an issue using some of the libraries with typscript within docker, that I didn't have time to resolve.
+* [ ] Move types and interfaces into a .d.ts file or files
+* [ ] Abstract all styling into its own .scss files
+* [ ] Valid all main actions/data
 
 
