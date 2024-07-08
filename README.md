@@ -92,5 +92,6 @@ This section aims to express the points that are either missing, or should be im
 * Make use of alias within the microservices. There is an issue using some of the libraries with typscript within docker, that I didn't have time to resolve.
 * Move types and interfaces into a .d.ts file or files
 * Abstract all styling into its own .scss files
+* Valid all main actions/data
 
 
