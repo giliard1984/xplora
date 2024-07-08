@@ -103,7 +103,7 @@ const typeDefs = gql`
     description: String
     address: String!
     layout: String!
-    createdAt: Date!
+    createdAt: Date
   }
 
   type HotelCreated {

@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Parking available",
+    "description": "There is an underground parking area, that can be utilised by customers.",
+    "type": "hotel",
+    "status": "available"
+  },
+  {
+    "name": "Swiming Pool",
+    "description": "Swiming pool available on site.",
+    "type": "hotel",
+    "status": "available"
+  },
+  {
+    "name": "Pet friendly",
+    "description": "Pets are allowed on site, depending on breed and/or size. Please ask for further details.",
+    "type": "hotel",
+    "status": "available"
+  },
+  {
+    "name": "Wifi",
+    "description": "Wifi connectivity on premisses",
+    "type": "hotel",
+    "status": "available"
+  },
+  {
+    "name": "King size bed",
+    "description": "King size bed available for this room",
+    "type": "room",
+    "status": "available"
+  },
+  {
+    "name": "Queen size bed",
+    "description": "Queen size bed available for this room",
+    "type": "room",
+    "status": "available"
+  },
+  {
+    "name": "Double size bed",
+    "description": "Double size bed available for this room",
+    "type": "room",
+    "status": "available"
+  },
+  {
+    "name": "Single size bed",
+    "description": "Single size bed available for this room",
+    "type": "room",
+    "status": "available"
+  }
+]

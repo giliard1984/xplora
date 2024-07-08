@@ -103,22 +103,24 @@ services:
 
   # BOOKINGS
   # creates its first bookings instance
-  # xplora-bookings-service-instance1:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   restart: unless-stopped
-  #   depends_on:
-  #     - xplora-generic-db
-  #   environment:
-  #     - APPID=4103
-  #     - DB_URI=mongodb://xplora-generic-db:27017/db
-  #   ports:
-  #     - 4103:4103
-  #   networks:
-  #     - xplora-network
-  #   volumes:
-  #     - ./bookings-service:/opt/app
+  xplora-bookings-service-instance1:
+    container_name: "xplora-bookings-service-instance1"
+    hostname: "xplora-bookings-service-instance1"
+    build:
+      context: ./bookings-service
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - xplora-generic-db
+    environment:
+      - APPID=4103
+      - DB_URI=mongodb://xplora-generic-db:27017/db
+    ports:
+      - 4103:4103
+    networks:
+      - xplora-network
+    volumes:
+      - ./bookings-service:/opt/app
 
   # DATABASES
   xplora-users-db:

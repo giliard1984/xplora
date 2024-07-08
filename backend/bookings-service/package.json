@@ -1,7 +1,7 @@
 {
-  "name": "users-service",
+  "name": "bookings-service",
   "version": "1.0.0",
-  "description": "This is the service responsible for keeping the users' accounts and some system information",
+  "description": "This is the service responsible for keeping the bookings related to users vs hotels",
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev --poll ./src/index.ts",
@@ -9,16 +9,17 @@
     "start": "npm run build && node dist/index.js"
   },
   "keywords": [
-    "Authentication",
-    "Accounts",
-    "System",
-    "Parameters"
+    "Hotel",
+    "Branches",
+    "Rooms",
+    "Services",
+    "Prices",
+    "Bookings"
   ],
   "author": "Giliard Alves Gomes",
   "license": "ISC",
   "devDependencies": {
     "@babel/preset-env": "^7.24.7",
-    "@types/bcryptjs": "^2.4.6",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/node": "^20.14.9",
@@ -33,7 +34,6 @@
     "@apollo/subgraph": "^2.8.2",
     "@babel/core": "^7.24.7",
     "@graphql-tools/utils": "^10.2.2",
-    "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "core-js": "^3.37.1",
     "cors": "^2.8.5",

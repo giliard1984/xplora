@@ -2,20 +2,14 @@ import React, { useState, useCallback } from "react";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { useApolloClient } from "@apollo/client";
 import { theme, Col, Row, Rate, Button, Image, DatePicker, Select } from "antd";
-import dayjs from "dayjs";
+import dayjs, { type Dayjs } from "dayjs";
 import { motion } from "framer-motion";
-// import { useQuery } from '@apollo/client';
+import { /* useQuery, */ useMutation } from '@apollo/client';
 // import { motion } from "framer-motion";
 
 // GraphQL - Queries, mutations and/or subscriptions
 import { FETCH_HOTEL_BY_ID } from "../graphql/queries";
-
-// Components
-// import HotelDetails from "../components/HotelCard";
-
-// interface Props {
-//   data: any
-// }
+import { ADD_BOOKING } from "../graphql/mutations";
 
 const { RangePicker } = DatePicker;
 
@@ -23,14 +17,12 @@ const HotelDetails: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  console.log(location);
   // Get the userId param from the URL.
   let { id } = useParams();
 
-  // console.log(location.state);
-  const [data, setData] = useState(location?.state);
-  // const [searchParams/* , setSearchParams */] = useParams();
-  // const { loading, error, data } = useQuery(FETCH_HOTEL_BY_ID);
+  const [hotelData, setHotelData] = useState(location?.state);
+  const [selectedDates, setSelectedDates] = useState<Dayjs[]>([dayjs(), dayjs().add(1, "day")]);
+  const [addBooking, { data, loading, error }] = useMutation(ADD_BOOKING);
 
   const {
     token: { colorBgContainer },
@@ -48,18 +40,22 @@ const HotelDetails: React.FC = () => {
             fetchHotelByIdId: id
           }
         })
-        .then((result) => setData(result.data.fetchHotelById));
+        .then((result) => setHotelData(result.data.fetchHotelById));
     }
   }, [id]);
 
-  const cheapestRoomPrice = Math.min.apply(Math, data?.prices?.map((item: any) => item.prices.at(-1)?.price));
+  const cheapestRoomPrice = Math.min.apply(Math, hotelData?.prices?.map((item: any) => item.prices.at(-1)?.price));
 
   const EURO_FX = 1.18;
+
+  const updateSelectedDates = (dates: any) => {
+    setSelectedDates([dates[0], dates[1]]);
+  };
 
   // function that aggregates the quantity of rooms by its types, based on the hotel's layout
   const QtyRoomsByType = useCallback((): Record<string, number>[] => {
     const groupedTypes: any[] = [];
-    data?.layout?.rooms?.forEach((room: any) => {
+    hotelData?.layout?.rooms?.forEach((room: any) => {
       const name = room?.roomType?.name?.toLowerCase().replaceAll(" ", "");
       const roomTypeId = room?.roomType?._id;
 
@@ -91,6 +87,26 @@ const HotelDetails: React.FC = () => {
     return <div>{message}</div>;
   };
 
+  const handleBooking = (data: any): void => {
+    const input = {
+      hotel: data.hotel,
+      roomType: data.roomType._id,
+      costs: [
+        {
+          category: "room",
+          price: data.prices.at(-1).price
+        }
+      ],
+      when: {
+        from: String(selectedDates[0].format("YYYYMMDD")),
+        to: String(selectedDates[1].format("YYYYMMDD"))
+      }
+    }
+
+    console.log(input);
+    addBooking({ variables: { input: input } });
+  };
+
   return (
     <>
       <p onClick={() => !location?.state ? navigate("/") : navigate(-1)} style={{ cursor: "pointer" }}>Back to search results</p>
@@ -106,9 +122,9 @@ const HotelDetails: React.FC = () => {
       >
         <Col xs={24} sm={16}>
           <Row>
-            <Col span={24}><Rate allowHalf defaultValue={data?.rating} /></Col>
-            <Col span={24} style={{ fontSize: 30 }}>{data?.name}</Col>
-            <Col span={24} style={{ color: "#818589" }}>{data?.address}</Col>
+            <Col span={24}><Rate allowHalf defaultValue={hotelData?.rating} /></Col>
+            <Col span={24} style={{ fontSize: 30 }}>{hotelData?.name}</Col>
+            <Col span={24} style={{ color: "#818589" }}>{hotelData?.address}</Col>
           </Row>
         </Col>
         <Col xs={24} sm={8}>
@@ -126,7 +142,7 @@ const HotelDetails: React.FC = () => {
       <Row gutter={[22, 16]}>
         <Col span={14}>
           <Image
-            src={`/images/hotels/${data?.image}`}
+            src={`/images/hotels/${hotelData?.image}`}
             alt="React Image"
             style={{ borderRadius: 0, height: "auto", width: "47dvw", objectFit: "contain" }}
           />
@@ -161,8 +177,9 @@ const HotelDetails: React.FC = () => {
               <RangePicker
                 size="large"
                 // minDate={dayjs().format("YYY-MM-DD")}
-                defaultValue={[dayjs(), dayjs().add(1, "day")]}
+                defaultValue={selectedDates}
                 format={"ddd, DD MMM"}
+                onChange={(dates: any) => updateSelectedDates(dates)}
               />
             </Col>
             <Col xs={24} sm={5}>
@@ -202,6 +219,7 @@ const HotelDetails: React.FC = () => {
                 size="large"
                 iconPosition="end"
                 block
+                disabled
                 // onClick={() => handleClick(data)}
               >
                 Update offers
@@ -211,7 +229,7 @@ const HotelDetails: React.FC = () => {
         </Col>
       </Row>
 
-      { data?.prices.map((price: any, index: number) =>
+      { hotelData?.prices.map((price: any, index: number) =>
         <motion.div
           initial={{
             x: 0,
@@ -249,6 +267,23 @@ const HotelDetails: React.FC = () => {
             </Col>
             <Col span={7} style={{ backgroundColor: "#f2f2f2", padding: 10 }}>
               <div style={{ fontWeight: "bold" }}>Conditions</div>
+              <div>Breakfast included</div>
+              <div>Cancellation not free of charge</div>
+              <div>Credit card required</div>
+              <br />
+              {loading && <div>Booking in process... Please wait for it to complete.</div>}
+              {!loading && !error &&
+                <Button
+                  type="primary"
+                  size="large"
+                  iconPosition="end"
+                  block
+                  onClick={() => handleBooking(price)}
+                >
+                  Book now
+                </Button>
+              }
+              {error && <div>{`Something went wrong! ${error.message}`}</div>}
             </Col>
           </Row>
         </motion.div>

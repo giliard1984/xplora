@@ -1,7 +1,5 @@
-const Session = require("./session");
-const Whitelist = require("./whitelist");
+const Booking = require("./booking");
 
 export {
-  Session,
-  Whitelist
+  Booking
 };

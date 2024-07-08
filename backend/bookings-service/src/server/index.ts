@@ -8,17 +8,12 @@ import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 import { buildSubgraphSchema } from "@apollo/subgraph";
-// import { mergeTypeDefs, mergeResolvers } from "@graphql-tools/merge"
 
 // Schemas
-import { typeDefs, resolvers } from "../schemas/user";
+import { typeDefs, resolvers } from "../schemas/booking";
 
 // Directives
-// TODO: Bring them together into an index file
 import { upperDirectiveTransformer } from "../directives/upper";
-import { isWhitelistedDirectiveTransformer } from "../directives/isWhitelisted";
-import { authDirectiveTransformer } from "../directives/auth";
-// import { isEmailOrUsernameDuplicatedDirectiveTransformer } from "@root/directives/isEmailOrUsernameDuplicated";
 
 async function startApolloServer() {
   const app = express();
@@ -32,16 +27,11 @@ async function startApolloServer() {
   });
 
   // Transformer function for an @upper directive
-  // TODO: Look for a solution to group directives
   subgraphSchema = upperDirectiveTransformer(subgraphSchema, "upper");
-  subgraphSchema = isWhitelistedDirectiveTransformer(subgraphSchema, "isWhitelisted");
-  subgraphSchema = authDirectiveTransformer(subgraphSchema, "auth");
-  // subgraphSchema = isEmailOrUsernameDuplicatedDirectiveTransformer(subgraphSchema, "isEmailOrUsernameDuplicated")
 
   const server = new ApolloServer({
     schema: subgraphSchema,
-    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-    // TODO: Add global middleware to check originKey is allowed
+    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })]
   });
 
   await server.start();
@@ -65,8 +55,8 @@ async function startApolloServer() {
 
   await new Promise(resolve => httpServer.listen({ port: process.env.APPID }, resolve as any));
 
-  app.get("/auth", (req, res) => res.send(`Hello User, API! Requested on instance ${process.env.APPID}`));
-  console.log(`🚀 Server (Users service) ready at http://localhost:${process.env.APPID}/graphql`);
+  app.get("/bookings", (req, res) => res.send(`Hello Bookings, API! Requested on instance ${process.env.APPID}`));
+  console.log(`🚀 Server (Bookings service) ready at http://localhost:${process.env.APPID}/graphql`);
 }
 
 startApolloServer();

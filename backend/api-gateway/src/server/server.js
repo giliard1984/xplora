@@ -28,8 +28,8 @@ async function startApolloGateway() {
     // real usage-based metrics.
     subgraphs: [
       { name: "xplora-users", url: "http://xplora-users-service-lb:8080/graphql" },
-      { name: "xplora-hotels", url: "http://xplora-hotels-service-instance1:4102/graphql" }
-      // { name: "xplora-bookings", url: "http://localhost:3110/graphql" }
+      { name: "xplora-hotels", url: "http://xplora-hotels-service-instance1:4102/graphql" },
+      { name: "xplora-bookings", url: "http://xplora-bookings-service-instance1:4103/graphql" }
     ],
     // introspectionHeaders: {
     //   appKey: "a073a55b-cb15-4c56-8573-2a8e52004cfb",
