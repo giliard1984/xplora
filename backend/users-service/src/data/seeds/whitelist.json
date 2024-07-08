@@ -1,0 +1,10 @@
+[
+  {
+    "client": "Postman",
+    "description": "This is the token required to log via Postman"
+  },
+  {
+    "client": "React Application",
+    "description": "This is the token required to log via the React Application"
+  }
+]

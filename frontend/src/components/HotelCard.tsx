@@ -1,7 +1,9 @@
 import React from "react";
-import { theme, /* Grid, */ Col, Row, Rate, Button } from "antd";
+import { useNavigate } from "react-router-dom";
+import { theme, /* Grid, */ Col, Row, Rate, Button, Image } from "antd";
+// import { motion, useTransform, useMotionValue, animate } from "framer-motion";
 // import { EyeOutlined } from '@ant-design/icons';
-import HolidayInnExpress from "../assets/images/hotels/holiday-inn-express.jpg";
+// import HolidayInnExpress from "../assets/images/hotels/holiday-inn-express.jpg";
 
 // const { useBreakpoint } = Grid;
 
@@ -10,19 +12,25 @@ interface Props {
 }
 
 const HotelCard: React.FC<Props> = ({ data }) => {
+  const navigate = useNavigate();
+
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
+  const handleClick = (data: any) => {
+    navigate(`/hotel/${data._id}/${data.name.toLowerCase().replaceAll(" ","-")}`, { state: data });
+  };
+
   // const screens = useBreakpoint();
   // console.log(screens);
-  // const cheapestRoom = data.prices.prices.at(-1);
+  const cheapestRoomPrice = Math.min.apply(Math, data.prices.map((item: any) => item.prices.at(-1)?.price));
+
+  const EURO_FX = 1.18;
 
   return (
     <Row
       gutter={[0, 16]}
-      // justify={"space-between"}
-      // align={"middle"}
       style={{
         padding: 24,
         minHeight: 110,
@@ -32,7 +40,12 @@ const HotelCard: React.FC<Props> = ({ data }) => {
       }}
     >
       <Col span={6}>
-        <img src={HolidayInnExpress} alt="React Image" style={{ borderRadius: 8, height: "100%", width: "90%"  }} />
+        {/* TODO: Move images to the CDN */}
+        <Image
+          src={`/images/hotels/${data?.image}`}
+          alt="React Image"
+          style={{ borderRadius: 8, height: "100%", width: "90%"  }}
+        />
       </Col>
       <Col span={18}>
         <Row>
@@ -45,15 +58,10 @@ const HotelCard: React.FC<Props> = ({ data }) => {
           </Col>
           <Col span={9}>
             <Row justify={"space-between"} style={{ textAlign: "right" }}>
-              <Col span={24} style={{ fontSize: 20 }}>£136.00</Col>
-              <Col span={24}><small>(€122.00)</small></Col>
+              <Col span={24} style={{ fontSize: 20 }}>£{cheapestRoomPrice.toFixed(2)}</Col>
+              {/* <Col span={24} style={{ fontSize: 20 }}>£{price.toFixed(2)}</Col> */}
+              <Col span={24}><small>(€{(cheapestRoomPrice * EURO_FX).toFixed(2)})</small></Col>
               <Col span={24}><small>Breakfast included</small></Col>
-              {/* <Col span={24}>
-                <Button type="primary" icon={<EyeOutlined />} size="large" iconPosition="end">
-                <Button type="primary" size="large" iconPosition="end">
-                  Hotel details
-                </Button>
-              </Col> */}
             </Row>
           </Col>
         </Row>
@@ -68,15 +76,21 @@ const HotelCard: React.FC<Props> = ({ data }) => {
             <div style={{ marginTop: 10, fontSize: 13 }}>
               {
                 data.layout.features?.map((feature: any) =>
-                  <span style={{ display: "inline-block", backgroundColor: "#E5E4E2", /* border: "1px solid #C0C0C0", */ borderRadius: 6, margin: 2, padding: "3px 6px" }}>{feature.name}</span>
+                  <span style={{ display: "inline-block", backgroundColor: "#E5E4E2", borderRadius: 6, margin: 2, padding: "3px 6px" }}>{feature.name}</span>
                 )
               }
             </div>
           </Col>
-          <Col span={6} style={{ backgroundColor: "#fafafa", border: "1px dashed #f2f2f2", minHeight: 110, /* padding: 15, */ textAlign: "center" }}>
+          <Col span={6} style={{ backgroundColor: "#fafafa", border: "1px dashed #f2f2f2", minHeight: 110, textAlign: "center" }}>
             <div style={{ fontSize: 11, marginBottom: 8, padding: "10px 15px 5px 15px", backgroundColor: "#f2f2f2" }}>Let's find out what this hotel has to offer?</div>
             <div style={{ padding: "5px 15px 5px 15px" }}>
-              <Button type="primary" size="large" iconPosition="end" block>
+              <Button
+                type="primary"
+                size="large"
+                iconPosition="end"
+                block
+                onClick={() => handleClick(data)}
+              >
                 Details
               </Button>
             </div>

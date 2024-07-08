@@ -7,10 +7,8 @@ import http from "http";
 import cors from "cors";
 import { json } from "body-parser";
 import cookieParser from "cookie-parser";
-// import axios from "axios";
 
-// import { typeDefs, resolvers } from "#root/schema";
-
+// function that starts the apollo gateway application
 async function startApolloGateway() {
   const app = express();
   const httpServer = http.createServer(app);
@@ -19,7 +17,6 @@ async function startApolloGateway() {
     willSendRequest({ request, context }) {
       request.http.headers.set("x-api-key", context.appKey);
       request.http.headers.set("x-access-token", context.token);
-      // console.log(context);
     }
   }
 
@@ -62,8 +59,9 @@ async function startApolloGateway() {
     subscriptions: false,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
 
+    // this adds the appKey and token to the context,
+    // so it can be utilised within queries/mutations/subscriptions to valid for instance an application is allowed and/or a user is logged in.
     context: ({ req }) => {
-      // appId: process.env.APPID,
       const appKey = req.headers["x-api-key"];
       const token = req.headers["x-access-token"];
 
@@ -72,7 +70,7 @@ async function startApolloGateway() {
   });
 
   await server.start();
-  // Specify the path where we"d like to mount our server
+  // Specify the path where we'd like to mount our server
   app.use(
     "/graphql",
     cors({

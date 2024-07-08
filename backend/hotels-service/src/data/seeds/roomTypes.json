@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Standard Room",
+    "description": "Standard Room. When you arrive at the hotel we will do our best to meet your room type preference. This is subject to availability and cannot be guaranteed",
+    "maxGuests": 2
+  },
+  {
+    "name": "Superior Room",
+    "description": "Provides a king bed, mini fridge, 26sqm/280sqft-27sqm/291sqft",
+    "maxGuests": 3
+  }
+]

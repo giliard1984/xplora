@@ -13,6 +13,10 @@ const schema = mongoose.Schema({
     type: String,
     required: true
   },
+  image: {
+    type: String,
+    required: false
+  },
   rating: {
     type: Number,
     required: true,

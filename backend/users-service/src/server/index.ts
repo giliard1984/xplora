@@ -8,13 +8,11 @@ import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 import { buildSubgraphSchema } from "@apollo/subgraph";
-// import { mergeTypeDefs, mergeResolvers } from "@graphql-tools/merge"
 
 // Schemas
 import { typeDefs, resolvers } from "../schemas/user";
 
 // Directives
-// TODO: Bring them together into an index file
 import { upperDirectiveTransformer } from "../directives/upper";
 import { isWhitelistedDirectiveTransformer } from "../directives/isWhitelisted";
 import { authDirectiveTransformer } from "../directives/auth";
@@ -32,7 +30,6 @@ async function startApolloServer() {
   });
 
   // Transformer function for an @upper directive
-  // TODO: Look for a solution to group directives
   subgraphSchema = upperDirectiveTransformer(subgraphSchema, "upper");
   subgraphSchema = isWhitelistedDirectiveTransformer(subgraphSchema, "isWhitelisted");
   subgraphSchema = authDirectiveTransformer(subgraphSchema, "auth");

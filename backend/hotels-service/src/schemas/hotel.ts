@@ -1,13 +1,6 @@
 import gql from "graphql-tag"; // TODO: Identify why subgraphSchema only works with this deprecated library in apollo server 4
 import dayjs from "dayjs";
 
-// const ObjectId = require('mongodb').ObjectID;
-
-// const prepare = (o: any) => {
-//   if (o?._id) o._id = o._id.toString();
-//   return o;
-// };
-
 const { ObjectId } = require('mongoose').Types;
 ObjectId.prototype.valueOf = function () {
   return this.toString();
@@ -32,6 +25,7 @@ const typeDefs = gql`
     fetchRoomTypes: [RoomType!]
     fetchAllHotelRoomTypePrices: [HotelRoomTypePrice!]
     fetchAllHotels: [Hotel!]
+    fetchHotelById(id: ID!): Hotel!
   }
 
   extend type Mutation {
@@ -53,7 +47,6 @@ const typeDefs = gql`
     description: String
     maxGuests: Number!
     createdAt: Date!
-    # roomTypePrices: HotelRoomTypePrice
   }
 
   type Price {
@@ -95,6 +88,7 @@ const typeDefs = gql`
     name: String!
     description: String
     address: String!
+    image: String
     rating: Number!
     serviceTimes: serviceTimes!
     prices: [HotelRoomTypePrice]
@@ -120,31 +114,6 @@ const typeDefs = gql`
     layout: String!
     createdAt: Date!
   }
-
-  # populate: {
-  #   path: "features",
-  #   model: "Feature"
-  # } 
-
-  # if (err) return res.json(500);
-  #       Project.populate(docs, options, function (err, projects) {
-  #         res.json(projects);
-  #       });
-
-#   .exec(function(err: any, docs: any) {
-
-# var options = {
-#   path: 'layout.features',
-#   model: 'Feature'
-# };
-
-# console.log(HotelModel);
-# });
-
-# async roomTypePrices(parent: any, {}, context: any) {
-#       let data = await HotelRoomTypePrice.findOne({ roomType: parent.roomType.toString() });
-#       return data;
-#     },
 
   extend schema
     @link(url: "https://specs.apollo.dev/federation/v2.7", import: ["@key", "@shareable", "@composeDirective", "@external", "@provides"])
@@ -174,6 +143,10 @@ const resolvers = {
     async prices(parent: any) {
       let data = await HotelRoomTypePrice.find({ hotel: parent._id.toString() }).populate('roomType');
       return data;
+    },
+    async hotelRoomPrices(parent: any) {
+      let data = await HotelRoomTypePrice.find();
+      return data;
     }
   },
   SearchHotel: {
@@ -193,6 +166,9 @@ const resolvers = {
     },
     async fetchAllHotels(root: any, {}, contextValue: any) {
       return await HotelModel.find({}).populate('layout.features layout.rooms.features layout.rooms.roomType');
+    },
+    async fetchHotelById(root: any, { id }: any) {
+      return await HotelModel.findOne({ id: id }).populate('layout.features layout.rooms.features layout.rooms.roomType');
     },
   },
   Mutation: {

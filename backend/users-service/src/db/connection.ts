@@ -1,5 +1,7 @@
 // Mongoose & MongoDB
 const mongoose = require("mongoose");
+const fs: any = require("fs/promises");
+
 import { Whitelist } from "../models";
 mongoose.set("strictQuery", true);
 
@@ -18,26 +20,22 @@ function initial() {
   // Populates whitelist collection
   Whitelist.countDocuments().then((count: number) => {
     if (count === 0) {
-      new Whitelist({
-        client: "Postman",
-        description: "This is the token required to log via Postman"
-      }).save().then((resp: any) => {
-        console.log("Added initial applications to the whitelist collection");
-      }).catch((e: Error) => {
-        console.log(`Error ${e}`);
-      });
-
-      new Whitelist({
-        client: "React Application",
-        description: "This is the token required to log via the React Application"
-      }).save().then((resp: any) => {
-        console.log("Added initial applications to the whitelist collection");
-      }).catch((e: Error) => {
-        console.log(`Error ${e}`);
-      });
+      fs.readFile("./src/data/seeds/whitelist.json")
+        .then((data: any) => {
+          for (const item of JSON.parse(data)) {
+            console.log(count, item);
+            new Whitelist(item).save().then((resp: any) => {
+              console.log("Added initial applications to the whitelist collection");
+            }).catch((e: Error) => {
+              console.log(`Error ${e}`);
+            });
+          }
+        })
+        .catch((error: Error) => {
+          console.log("Error: ", error);
+        });
     }
   });
-
 }
 
 export default mongoose;

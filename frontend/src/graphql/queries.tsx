@@ -18,6 +18,7 @@ const FETCH_ALL_HOTELS = gql`
     fetchAllHotels {
       _id
       address
+      image
       createdAt
       description
       name
@@ -79,7 +80,75 @@ const FETCH_ALL_HOTELS = gql`
   }
 `;
 
+
+const FETCH_HOTEL_BY_ID = gql`
+  query FetchHotelById($fetchHotelByIdId: ID!) {
+    fetchHotelById(id: $fetchHotelByIdId) {
+      _id
+      name
+      description
+      address
+      image
+      rating
+      serviceTimes {
+        checkIn
+        checkOut
+      }
+      prices {
+        _id
+        hotel
+        roomType {
+          _id
+          name
+          description
+          maxGuests
+          createdAt
+        }
+        prices {
+          from
+          to
+          price
+        }
+        createdAt
+      }
+      layout {
+        totalFloors
+        features {
+          _id
+          name
+          description
+          type
+          status
+          createdAt
+        }
+        rooms {
+          floor
+          number
+          roomType {
+            _id
+            name
+            description
+            maxGuests
+            createdAt
+          }
+          features {
+            _id
+            name
+            description
+            type
+            status
+            createdAt
+          }
+          description
+          status
+        }
+      }
+    }
+  }
+`;
+
 export {
   FETCH_ALL_FEATURES,
-  FETCH_ALL_HOTELS
+  FETCH_ALL_HOTELS,
+  FETCH_HOTEL_BY_ID
 };

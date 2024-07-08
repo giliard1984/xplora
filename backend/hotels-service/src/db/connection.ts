@@ -5,12 +5,6 @@ const mongoose = require("mongoose");
 import { Feature, RoomType, Hotel, HotelRoomTypePrice } from "../models";
 mongoose.set("strictQuery", true);
 
-// const { ObjectId } = mongoose.Types;
-
-// ObjectId.prototype.valueOf = function () {
-//   return this.toString();
-// };
-
 mongoose.connect("mongodb://xplora-generic-db:27017/db", {});
 
 mongoose.connection.once("open", () => {
@@ -101,7 +95,6 @@ async function initial() {
     let newFeature = new Feature(feature);
 
     const result = await newFeature.save();
-    // console.log("Feature:", result.toObject({ getters: true }));
     featuresData.push(result.toObject({ getters: true }));
   };
 
@@ -110,7 +103,6 @@ async function initial() {
     let newRoomType = new RoomType(roomType);
 
     const result = await newRoomType.save();
-    // console.log("RoomType:", result.toObject({ getters: true }));
     roomTypeData.push(result.toObject({ getters: true }));
   };
 
@@ -119,68 +111,17 @@ async function initial() {
 
     const result = await newHotel.save();
     hotelData.push(result.toObject({ getters: true }));
-    // console.log("Hotel:", result.toObject({ getters: true }));
   };
 
   const addHotelRoomTypePrice = async (hotelRoomTypePrice: any): Promise<any> => {
     let newHotelRoomTypePrice = new HotelRoomTypePrice(hotelRoomTypePrice);
 
-    const result = await newHotelRoomTypePrice.save();
-    // console.log("Hotel:", result.toObject({ getters: true }));
+    await newHotelRoomTypePrice.save();
   };
   
   // reads the features migrations and populate the collection
   if (featuresCounter === 0) {
-    const features = [
-      {
-        name: "Parking available",
-        description: "There is an underground parking area, that can be utilised by customers.",
-        type: "hotel",
-        status: "available"
-      },
-      {
-        name: "Swiming Pool",
-        description: "Swiming pool available on site.",
-        type: "hotel",
-        status: "available"
-      },
-      {
-        name: "Pet friendly",
-        description: "Pets are allowed on site, depending on breed and/or size. Please ask for further details.",
-        type: "hotel",
-        status: "available"
-      },
-      {
-        name: "Wifi",
-        description: "Wifi connectivity on premisses",
-        type: "hotel",
-        status: "available"
-      },
-      {
-        name: "King size bed",
-        description: "King size bed available for this room",
-        type: "room",
-        status: "available"
-      },
-      {
-        name: "Queen size bed",
-        description: "Queen size bed available for this room",
-        type: "room",
-        status: "available"
-      },
-      {
-        name: "Double size bed",
-        description: "Double size bed available for this room",
-        type: "room",
-        status: "available"
-      },
-      {
-        name: "Single size bed",
-        description: "Single size bed available for this room",
-        type: "room",
-        status: "available"
-      }
-    ];
+    const features = require('../data/seeds/features.json');
 
     // run the features migration, considering data is not in the database
     // utilising this for syntax instead of .forEach for async/await reasons (modern problems, might require older solutions)
@@ -193,18 +134,7 @@ async function initial() {
 
   // reads the room type migrations and populate the collection
   if (roomTypeCounter === 0) {
-    const roomTypes = [
-      {
-        name: "Standard Room",
-        description: "Standard Room. When you arrive at the hotel we will do our best to meet your room type preference. This is subject to availability and cannot be guaranteed",
-        maxGuests: 2
-      },
-      {
-        name: "Superior Room",
-        description: "Provides a king bed, mini fridge, 26sqm/280sqft-27sqm/291sqft",
-        maxGuests: 3
-      }
-    ];
+    const roomTypes = require('../data/seeds/roomTypes.json');
 
     // run the room type migration, considering data is not in the database
     // utilising this for syntax instead of .forEach for async/await reasons (modern problems, might require older solutions)
@@ -216,13 +146,12 @@ async function initial() {
   }
 
   if (hotelCounter === 0) {
-    // console.log(roomTypeData);
-  
     const hotels = [
       {
         name: "Holiday Inn Express",
         description: "London - Excel",
         address: "1018 Dockside Road, E16 2FQ London",
+        image: "holiday-inn-express.jpg",
         rating: 2.6,
         serviceTimes: {
           checkIn: "02:00 PM",
@@ -239,6 +168,22 @@ async function initial() {
               features: getFeatureIdsGivenNames(["King size bed"]),
               description: "This is a nice room",
               status: "available"
+            },
+            {
+              floor: 1,
+              number: "2",
+              roomType: getRoomTypeIdsGivenNames("Standard Room"),
+              features: getFeatureIdsGivenNames(["King size bed"]),
+              description: "This is a nice room",
+              status: "available"
+            },
+            {
+              floor: 1,
+              number: "3",
+              roomType: getRoomTypeIdsGivenNames("Superior Room"),
+              features: getFeatureIdsGivenNames(["King size bed"]),
+              description: "This is a nice room",
+              status: "available"
             }
           ],
         },
@@ -247,6 +192,7 @@ async function initial() {
         name: "Point A Hotel Paddington",
         description: "This is a hotel",
         address: "41 PRAED STREET, W2 1NR London",
+        image: "point-a-hotel-paddington.jpg",
         rating: 4.5,
         serviceTimes: {
           checkIn: "02:00 PM",
@@ -271,6 +217,7 @@ async function initial() {
         name: "Sheraton Heathrow Hotel",
         description: "This is a hotel",
         address: "HEATHROW AIRPORT COLNBROOK BYPASS, UB7 0HJ London, Middlesex",
+        image: "staybridge-suites.jpg",
         rating: 4.3,
         serviceTimes: {
           checkIn: "01:00 PM",
@@ -324,7 +271,7 @@ async function initial() {
         prices: [
           {
             from: dayjs().subtract(2, 'day').format("YYYYMMDD"),
-            price: 132.80
+            price: 145.20
           }
         ]
       },
