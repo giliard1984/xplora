@@ -43,6 +43,8 @@ To be able to start this application, you should have docker and docker-compose 
 
 That's it! You just need to access the backend folder and run `docker-compose up -d` , and check everything is up :)
 
+Note: When starting the microservices, the inital data will be automatically added to the MongoDB collections, so you can start using the application straight away.
+
 You should be able to access the API Gateway on `http://localhost:4000/graphql`, which is the port expressed in the Dockerfile for this application.
 
 ![image](https://github.com/giliard1984/xplora/assets/22618819/183e28b5-269d-49b8-9ecf-6cf45f58e562)
@@ -50,7 +52,7 @@ You should be able to access the API Gateway on `http://localhost:4000/graphql`,
 
 ## Setting Up & starting the frontend application
 
-For the frontend, please guarantee you have node 20 installed on your machine.
+For the frontend, please guarantee you have node 20 installed on your machine. Bear in mind, that I kept the UI/UX at minimum (which means I didn't focus on delivering a beautiful application, following the booking platforms out there).
 Run `yarn install`
 Run `yarn run dev`
 
