@@ -73,6 +73,8 @@ This section aims to express the points that are either missing, or should be im
 * Implement filters
 * Abstract some component code even further, to increase reusability
 * Implement unit testing
+* Move some parameters into .env. e.g. GraphQL Api Gateway within the frontend project
+* Create some ENUMS and move some data
 * There is a known issue within the users microservice, that is causing the seeds to be saved twice
 * Improve the existing components
 * Make use of alias within the microservices. There is an issue using some of the libraries with typscript within docker, that I didn't have time to resolve.
