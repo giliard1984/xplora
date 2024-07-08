@@ -64,6 +64,15 @@ You should be able to access the application on `http://localhost:5173`, which i
 ![image](https://github.com/giliard1984/xplora/assets/22618819/f03eec6e-5fce-46b4-a4b2-6fbf4ec4938c)
 
 
+## Business Logic
+
+* As a user, I should select when I want to get to the hotel and leave
+* Availability is based on the layout the hotel configured (rooms), and it takes into consideration all rooms booked during the period (it might overlap)
+* If I am selecting Arriving tomorrow and leaving the hotel in 2 days, this means that the availability should be based on Tomorrow/+1 day+. In this case the last day is tricky, because if a new client is entering, it means the room will be available. Also, if that day is a brigde (in between periods), it means it is allocated
+* Bear in mind, that hotels will set different check in and check out times
+
+* Note: I'll bring an excel example here soon!
+
 
 ## Next steps
 
