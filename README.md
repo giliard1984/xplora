@@ -2,9 +2,9 @@
 
 Please write a simple web app and API to show your skills relevant to our job advert.
 Some of the features & expectations:
-• Database design and data modelling about availability of hotel rooms and bookings
-• Feature to find available rooms by date range at least
-• Feature to create a booking with basic details of customer for a hotel room
+* Database design and data modelling about availability of hotel rooms and bookings
+* Feature to find available rooms by date range at least
+* Feature to create a booking with basic details of customer for a hotel room
 
 Bonus: automated testing
 The idea of this task is to show off your skills related to our job spec. We know this leaves a
@@ -14,16 +14,16 @@ lot to your interpretation; we would like to see your approach.
 ## Technologies involved
 
 For the backend, I've decided to use something slightly different.
-• Docker
-• Node.js
-• Typescript
-• ApolloServer (as subgraphs for the microservices and supergraph on the API-Gateway) - GraphQL
-• MongoDB (2 main databases: user and generic databases)
+* Docker
+* Node.js
+* Typescript
+* ApolloServer (as subgraphs for the microservices and supergraph on the API-Gateway) - GraphQL
+* MongoDB (2 main databases: user and generic databases)
 
 For the frontend:
-• React 18
-• Typescript
-• ApolloClient (acessing the API-Gateway, which is an ApolloFederation project) - GraphQL
+* React 18
+* Typescript
+* ApolloClient (acessing the API-Gateway, which is an ApolloFederation project) - GraphQL
 
 
 ## Archictecture
@@ -69,12 +69,12 @@ You should be able to access the application on `http://localhost:5173`, which i
 
 This section aims to express the points that are either missing, or should be implemented, for this project to function better.
 
-• Valid bookings, based on the periods
-• Implement filters
-• There is a known issue within the users microservice, that is causing the seeds to be saved twice
-• Improve the existing components
-• Make use of alias within the microservices. There is an issue using some of the libraries with typscript within docker, that I didn't have time to resolve.
-• Move types and interfaces into a .d.ts file or files
-• Abstract all styling into its own .scss files
+* Valid bookings, based on the periods
+* Implement filters
+* There is a known issue within the users microservice, that is causing the seeds to be saved twice
+* Improve the existing components
+* Make use of alias within the microservices. There is an issue using some of the libraries with typscript within docker, that I didn't have time to resolve.
+* Move types and interfaces into a .d.ts file or files
+* Abstract all styling into its own .scss files
 
 
