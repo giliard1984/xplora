@@ -2,9 +2,9 @@
 
 Please write a simple web app and API to show your skills relevant to our job advert.
 Some of the features & expectations:
-• Database design and data modelling about availability of hotel rooms and bookings
-• Feature to find available rooms by date range at least
-• Feature to create a booking with basic details of customer for a hotel room
+* Database design and data modelling about availability of hotel rooms and bookings
+* Feature to find available rooms by date range at least
+* Feature to create a booking with basic details of customer for a hotel room
 
 Bonus: automated testing
 The idea of this task is to show off your skills related to our job spec. We know this leaves a
@@ -14,16 +14,16 @@ lot to your interpretation; we would like to see your approach.
 ## Technologies involved
 
 For the backend, I've decided to use something slightly different.
-• Docker
-• Node.js
-• Typescript
-• ApolloServer (as subgraphs for the microservices and supergraph on the API-Gateway) - GraphQL
-• MongoDB (2 main databases: user and generic databases)
+* Docker
+* Node.js
+* Typescript
+* ApolloServer (as subgraphs for the microservices and supergraph on the API-Gateway) - GraphQL
+* MongoDB (2 main databases: user and generic databases)
 
 For the frontend:
-• React 18
-• Typescript
-• ApolloClient (acessing the API-Gateway, which is an ApolloFederation project) - GraphQL
+* React 18
+* Typescript
+* ApolloClient (acessing the API-Gateway, which is an ApolloFederation project) - GraphQL
 
 
 ## Archictecture
@@ -35,7 +35,8 @@ Bear in mind, that I drew what I had in mind, and highlighted only the microserv
 
 ## Modelling
 
-![image](https://github.com/giliard1984/xplora/assets/22618819/059cd224-5c41-44a7-baab-548771254afb)
+![image](https://github.com/giliard1984/xplora/assets/22618819/2c61091c-7f7e-4aa4-9652-1be8f79b3118)
+
 
 ## Setting Up & starting the backend application
 
@@ -60,17 +61,22 @@ You should be able to access the application on `http://localhost:5173`, which i
 
 ![image](https://github.com/giliard1984/xplora/assets/22618819/aace907a-f844-4593-9411-ab6d6c99eb04)
 
-![image](https://github.com/giliard1984/xplora/assets/22618819/c774420c-d3d7-4f8b-8d0a-d476b33b6e82)
+![image](https://github.com/giliard1984/xplora/assets/22618819/f03eec6e-5fce-46b4-a4b2-6fbf4ec4938c)
+
 
 
 ## Next steps
 
 This section aims to express the points that are either missing, or should be implemented, for this project to function better.
 
-• There is a known issue within the users microservice, that is causing the seeds to be saved twice
-• Improve the existing components
-• Make use of alias within the microservices. There is an issue using some of the libraries with typscript within docker, that I didn't have time to resolve.
-• Move types and interfaces into a .d.ts file or files
-• Abstract all styling into its own .scss files
+* Valid bookings, based on the periods
+* Implement filters
+* Abstract some component code even further, to increase reusability
+* Implement unit testing
+* There is a known issue within the users microservice, that is causing the seeds to be saved twice
+* Improve the existing components
+* Make use of alias within the microservices. There is an issue using some of the libraries with typscript within docker, that I didn't have time to resolve.
+* Move types and interfaces into a .d.ts file or files
+* Abstract all styling into its own .scss files
 
 
