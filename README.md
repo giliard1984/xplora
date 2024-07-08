@@ -10,6 +10,7 @@ Bonus: automated testing
 The idea of this task is to show off your skills related to our job spec. We know this leaves a
 lot to your interpretation; we would like to see your approach.
 
+
 ## Technologies involved
 
 For the backend, I've decided to use something slightly different.
@@ -24,11 +25,13 @@ For the frontend:
 • Typescript
 • ApolloClient (acessing the API-Gateway, which is an ApolloFederation project) - GraphQL
 
+
 ## Archictecture
 
 Bear in mind, that I drew what I had in mind, and highlighted only the microservices and/or containers I wanted to implemented (this means you will see more details than implemented).
 
 ![image](https://github.com/giliard1984/xplora/assets/22618819/d251b378-feef-44b3-a01a-8fd65d321d71)
+
 
 ## Modeling
 
@@ -42,6 +45,7 @@ That's it! You just need to access the backend folder and run `docker-compose up
 
 You should be able to access the API Gateway on `http://localhost:4000/graphql`, which is the port expressed in the Dockerfile for this application.
 
+
 ## Setting Up & starting the frontend application
 
 For the frontend, please guarantee you have node 20 installed on your machine.
@@ -49,3 +53,10 @@ Run `yarn install`
 Run `yarn run dev`
 
 You should be able to access the application on `http://localhost:5173`, which is the port Vite starts the application (by default).
+
+
+## Next steps
+
+This section aims to express the points that are either missing, or should be implemented, for this project to function better.
+
+
