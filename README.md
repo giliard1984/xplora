@@ -74,6 +74,7 @@ This section aims to express the points that are either missing, or should be im
 * Abstract some component code even further, to increase reusability
 * Implement unit testing
 * Move some parameters into .env. e.g. GraphQL Api Gateway within the frontend project
+* Move images to the CDN
 * Create some ENUMS and move some data
 * There is a known issue within the users microservice, that is causing the seeds to be saved twice
 * Improve the existing components
