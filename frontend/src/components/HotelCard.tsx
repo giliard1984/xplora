@@ -1,9 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { theme, /* Grid, */ Col, Row, Rate, Button, Image } from "antd";
-// import { motion, useTransform, useMotionValue, animate } from "framer-motion";
-// import { EyeOutlined } from '@ant-design/icons';
-// import HolidayInnExpress from "../assets/images/hotels/holiday-inn-express.jpg";
+
+import styles from "../assets/styles/shared.module.scss";
 
 // const { useBreakpoint } = Grid;
 
@@ -31,19 +30,17 @@ const HotelCard: React.FC<Props> = ({ data }) => {
   return (
     <Row
       gutter={[0, 16]}
+      className={styles.hotelCard}
       style={{
-        padding: 24,
-        minHeight: 110,
         background: colorBgContainer,
-        borderRadius: borderRadiusLG,
-        marginBottom: 10
+        borderRadius: borderRadiusLG
       }}
     >
       <Col span={6}>
-        {/* TODO: Move images to the CDN */}
         <Image
           src={`/images/hotels/${data?.image}`}
           alt="React Image"
+          // className={styles.hotelCardImage}
           style={{ borderRadius: 8, height: "100%", width: "90%"  }}
         />
       </Col>
@@ -52,14 +49,13 @@ const HotelCard: React.FC<Props> = ({ data }) => {
           <Col span={15}>
             <Row>
               <Col span={24}><Rate allowHalf defaultValue={data?.rating} /></Col>
-              <Col span={24} style={{ fontSize: 20 }}>{data.name}</Col>
-              <Col span={24} style={{ color: "#818589" }}>{data.address}</Col>
+              <Col span={24} className={styles.hotelName}>{data.name}</Col>
+              <Col span={24} className={styles.hotelAddress}>{data.address}</Col>
             </Row>
           </Col>
           <Col span={9}>
             <Row justify={"space-between"} style={{ textAlign: "right" }}>
               <Col span={24} style={{ fontSize: 20 }}>£{cheapestRoomPrice.toFixed(2)}</Col>
-              {/* <Col span={24} style={{ fontSize: 20 }}>£{price.toFixed(2)}</Col> */}
               <Col span={24}><small>(€{(cheapestRoomPrice * EURO_FX).toFixed(2)})</small></Col>
               <Col span={24}><small>Breakfast included</small></Col>
             </Row>
@@ -76,7 +72,10 @@ const HotelCard: React.FC<Props> = ({ data }) => {
             <div style={{ marginTop: 10, fontSize: 13 }}>
               {
                 data.layout.features?.map((feature: any) =>
-                  <span style={{ display: "inline-block", backgroundColor: "#E5E4E2", borderRadius: 6, margin: 2, padding: "3px 6px" }}>{feature.name}</span>
+                  <span
+                    key={`hotel-card-feature-${feature._id}`}
+                    style={{ display: "inline-block", backgroundColor: "#E5E4E2", borderRadius: 6, margin: 2, padding: "3px 6px" }}
+                  >{feature.name}</span>
                 )
               }
             </div>

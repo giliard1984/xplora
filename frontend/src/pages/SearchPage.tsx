@@ -15,8 +15,9 @@ const SearchPage: React.FC = () => {
   if (error) return <p>Error : {error.message}</p>; // TODO: Create an error component, and gracefully present the message
 
   // iterates through the hotels returned by the endpoint, in order to render its details
-  return data.fetchAllHotels.map((hotel: any, index: number) =>
+  return data.fetchAllHotels.map((hotel: Hotel, index: number) =>
     <motion.div
+      key={`hotel-card-wrapper-${hotel._id}`}
       initial={{
         x: 0,
         y: -100,

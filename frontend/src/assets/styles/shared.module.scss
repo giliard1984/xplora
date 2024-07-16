@@ -1,0 +1,36 @@
+.hotelCard {
+  padding: 24px;
+  min-height: 110px;
+  margin-bottom: 10px;
+}
+
+// .hotelCardImage {
+//   border-radius: 8px;
+//   height: 100%;
+//   width: 90%
+// }
+
+
+.hotelName {
+  font-Size: 20px;
+}
+
+.hotelNameDetail {
+  font-Size: 30px;
+}
+
+.hotelAddress {
+  color: #818589;
+}
+
+.hotelDetails {
+  padding: 24px;
+  min-height: 110px;
+  margin-bottom: 10px;
+}
+
+.goBack {
+  cursor: pointer;
+  color: navy;
+  text-decoration: underline;
+}

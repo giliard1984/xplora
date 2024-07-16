@@ -4,8 +4,9 @@ import { useApolloClient } from "@apollo/client";
 import { theme, Col, Row, Rate, Button, Image, DatePicker, Select } from "antd";
 import dayjs, { type Dayjs } from "dayjs";
 import { motion } from "framer-motion";
-import { /* useQuery, */ useMutation } from '@apollo/client';
-// import { motion } from "framer-motion";
+import { useMutation } from '@apollo/client';
+
+import styles from "../assets/styles/shared.module.scss";
 
 // GraphQL - Queries, mutations and/or subscriptions
 import { FETCH_HOTEL_BY_ID } from "../graphql/queries";
@@ -22,7 +23,7 @@ const HotelDetails: React.FC = () => {
 
   const [hotelData, setHotelData] = useState(location?.state);
   const [selectedDates, setSelectedDates] = useState<Dayjs[]>([dayjs(), dayjs().add(1, "day")]);
-  const [addBooking, { data, loading, error }] = useMutation(ADD_BOOKING);
+  const [addBooking, { /* data, */ loading, error }] = useMutation(ADD_BOOKING);
 
   const {
     token: { colorBgContainer },
@@ -44,8 +45,10 @@ const HotelDetails: React.FC = () => {
     }
   }, [id]);
 
+  // identifies the cheapest room price, so it gets returned on the screen
   const cheapestRoomPrice = Math.min.apply(Math, hotelData?.prices?.map((item: any) => item.prices.at(-1)?.price));
 
+  // applies a conversion rate (static for the purposes of this task)
   const EURO_FX = 1.18;
 
   const updateSelectedDates = (dates: any) => {
@@ -73,6 +76,7 @@ const HotelDetails: React.FC = () => {
 
   const qtyRoomsByType = QtyRoomsByType();
 
+  // finds out the rooms availability, and returns a message
   const RoomsAvailable: React.FC = ({ data }: any): React.JSX.Element => {
     if (!data) return <></>;
 
@@ -87,6 +91,7 @@ const HotelDetails: React.FC = () => {
     return <div>{message}</div>;
   };
 
+  // handles the booking process, where the user passes down the required information
   const handleBooking = (data: any): void => {
     const input = {
       hotel: data.hotel,
@@ -103,28 +108,34 @@ const HotelDetails: React.FC = () => {
       }
     }
 
-    console.log(input);
     addBooking({ variables: { input: input } });
+  };
+
+  const GoBack: React.FC = (): JSX.Element => {
+    return (
+      <p
+        className={styles.goBack}
+        onClick={() => !location?.state ? navigate("/") : navigate(-1)}
+      >
+        Back to search results
+      </p>
+    );
   };
 
   return (
     <>
-      <p onClick={() => !location?.state ? navigate("/") : navigate(-1)} style={{ cursor: "pointer" }}>Back to search results</p>
+      <GoBack />
       <Row
         gutter={[0, 16]}
         align={"bottom"}
-        style={{
-          padding: 24,
-          minHeight: 110,
-          background: colorBgContainer,
-          marginBottom: 10
-        }}
+        style={{ background: colorBgContainer }}
+        className={styles.hotelDetails}
       >
         <Col xs={24} sm={16}>
           <Row>
             <Col span={24}><Rate allowHalf defaultValue={hotelData?.rating} /></Col>
-            <Col span={24} style={{ fontSize: 30 }}>{hotelData?.name}</Col>
-            <Col span={24} style={{ color: "#818589" }}>{hotelData?.address}</Col>
+            <Col span={24} className={styles.hotelNameDetail}>{hotelData?.name}</Col>
+            <Col span={24} className={styles.hotelAddress}>{hotelData?.address}</Col>
           </Row>
         </Col>
         <Col xs={24} sm={8}>
