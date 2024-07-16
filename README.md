@@ -2,11 +2,13 @@
 
 Please write a simple web app and API to show your skills relevant to our job advert.
 Some of the features & expectations:
+
 * Database design and data modelling about availability of hotel rooms and bookings
 * Feature to find available rooms by date range at least
 * Feature to create a booking with basic details of customer for a hotel room
 
 Bonus: automated testing
+
 The idea of this task is to show off your skills related to our job spec. We know this leaves a
 lot to your interpretation; we would like to see your approach.
 
@@ -64,19 +66,34 @@ You should be able to access the application on `http://localhost:5173`, which i
 ![image](https://github.com/giliard1984/xplora/assets/22618819/f03eec6e-5fce-46b4-a4b2-6fbf4ec4938c)
 
 
+## Business Logic
+
+* As a user, I should select when I want to get to the hotel and leave
+* Availability is based on the layout the hotel configured (rooms), and it takes into consideration all rooms booked during the period (it might overlap)
+* If I am selecting Arriving tomorrow and leaving the hotel in 2 days, this means that the availability should be based on Tomorrow/+1 day+. In this case the last day is tricky, because if a new client is entering, it means the room will be available. Also, if that day is a brigde (in between periods), it means it is allocated
+* Bear in mind, that hotels will set different check in and check out times
+
+* Generates the list of rooms the hotel has to offer, based on the layout. Fetches all bookings for those rooms, and generates the matrix of availability (based on the selected periods - filtered).
+![image](https://github.com/giliard1984/xplora/assets/22618819/5afb07b7-7e6b-44c1-b8b8-57a37a9932e0)
+
+
 
 ## Next steps
 
 This section aims to express the points that are either missing, or should be implemented, for this project to function better.
 
-* Valid bookings, based on the periods
-* Implement filters
-* Abstract some component code even further, to increase reusability
-* Implement unit testing
-* There is a known issue within the users microservice, that is causing the seeds to be saved twice
-* Improve the existing components
-* Make use of alias within the microservices. There is an issue using some of the libraries with typscript within docker, that I didn't have time to resolve.
-* Move types and interfaces into a .d.ts file or files
-* Abstract all styling into its own .scss files
+* [ ] Valid bookings, based on the periods
+* [ ] Implement filters
+* [ ] Abstract some component code even further, to increase reusability
+* [ ] Implement unit testing
+* [ ] Move some parameters into .env. e.g. GraphQL Api Gateway within the frontend project
+* [ ] Move images to the CDN
+* [ ] Create some ENUMS and move some data
+* [ ] here is a known issue within the users microservice, that is causing the seeds to be saved twice
+* [ ] Improve the existing components
+* [ ] Make use of alias within the microservices. There is an issue using some of the libraries with typscript within docker, that I didn't have time to resolve.
+* [ ] Move types and interfaces into a .d.ts file or files
+* [ ] Abstract all styling into its own .scss files
+* [ ] Valid all main actions/data
 
 
